@@ -64,6 +64,6 @@ def read_instance(instance_id, path):
 
 if __name__ == "__main__":
     n_instances = 40
-    PATH = "/home/belericks7/Documenti/optimization/VLSI_optimization/"
+    PATH = "/home/belericks7/Documenti/optimization/VLSI_optimization-main/"
     time_stats = solve_all(
         min_instance=1, max_instance=n_instances, rotation=False, ordered=True, path=PATH)
