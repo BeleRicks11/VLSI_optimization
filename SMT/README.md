@@ -2,7 +2,7 @@
 
 ## Requirements
 The following packages are required:
-- minizinc
+- z3
 - matplotlib
 - numpy
 
@@ -16,3 +16,4 @@ You can modify the following arguments of the main function:
 | `n_instances`                                    | The number of instances that you want to solve                               |
 | `rotation`                                       | If you want to launch the model that allows rotation or not                  |
 | `ordered`                                        | If you want to apply the sorting of the circuits by dimension or not         |
+| `path`                                           | File path where you have the directory VLSI_optimization                     |
