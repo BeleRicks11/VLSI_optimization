@@ -74,6 +74,6 @@ def solve_instance(instance_id, rotation, ordered, path):
 
 if __name__ == "__main__":
     n_instances = 40
-    PATH = '/home/belericks7/Documenti/optimization/VLSI_optimization/'
+    PATH = '/home/belericks7/Documenti/optimization/VLSI_optimization-main/'
     time_stats = solve_all(n_instances, rotation=False,
                            ordered=True, path=PATH)
