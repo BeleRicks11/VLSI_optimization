@@ -42,13 +42,13 @@ def plot_statistics(n_instances, time_stats, time_stats_rotation=None):
     plt.savefig('time_statistics' + str(random.randint(1, 1000)) + '.png')
 
 
-def read_instance_dzn(instance_id, ordered):
+def read_instance_dzn(instance_id, ordered, path):
     if ordered:
-        filepath = (
-            "/home/belericks7/Documenti/optimization/VLSI/Instances/sorted_instances_dzn/ins-" + str(instance_id) + ".dzn")
+        filepath = (path + "Instances/sorted_instances_dzn/ins-" +
+                    str(instance_id) + ".dzn")
     else:
-        filepath = (
-            "/home/belericks7/Documenti/optimization/VLSI/Instances/instances_dzn/ins-" + str(instance_id) + ".dzn")
+        filepath = (path + "Instances/instances_dzn/ins-" +
+                    str(instance_id) + ".dzn")
 
     with open(filepath, "r") as f_in:
         f = f_in.readlines()
@@ -60,9 +60,9 @@ def read_instance_dzn(instance_id, ordered):
     return dims, W, n
 
 
-def create_sorted_instances_dzn():
-    folder_in = "/home/belericks7/Documenti/optimization/VLSI/Instances/instances_txt/"
-    folder_out = "/home/belericks7/Documenti/optimization/VLSI/Instances/sorted_instances_dzn/"
+def create_sorted_instances_dzn(path):
+    folder_in = path + "Instances/instances_txt/"
+    folder_out = path + "Instances/sorted_instances_dzn/"
 
     for txt_file in os.listdir(folder_in):
         l1 = []
@@ -91,9 +91,9 @@ def create_sorted_instances_dzn():
             f_out.write("];")
 
 
-def create_instances_dzn():
-    folder_in = "/home/belericks7/Documenti/optimization/VLSI/Instances/instances_txt//"
-    folder_out = "/home/belericks7/Documenti/optimization/VLSI/Instances/instances_dzn//"
+def create_instances_dzn(path):
+    folder_in = path + "Instances/instances_txt/"
+    folder_out = path + "Instances/instances_dzn/"
 
     for txt_file in os.listdir(folder_in):
         with open(os.path.join(folder_out, txt_file[:-3])+"dzn", "w") as f_out:

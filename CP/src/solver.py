@@ -5,29 +5,27 @@ import numpy as np
 import datetime
 
 
-def solve_all(max_instance, rotation, ordered):
+def solve_all(max_instance, rotation, ordered, path):
     n_solved = 0
     time_stats = []
     for i in range(1, max_instance+1):
         print("Solving: ", i)
-        res = solve_instance(i, rotation, ordered)
+        res = solve_instance(i, rotation, ordered, path)
         print("\tObj: ", res.objective)
         print("\tTime: ", res.statistics["solveTime"])
         print("\tFailures: ", res.statistics["failures"])
         print("\tStatus: ", res.status)
         print("\n")
 
-        dims, w, n = read_instance_dzn(i, ordered)
+        dims, w, n = read_instance_dzn(i, ordered, path)
 
         if res.status == Status.OPTIMAL_SOLUTION:
             # plot_result(res, dims, w, n)
             time_stats.append(res.statistics["solveTime"])
             if rotation:
-                f = open(
-                    "/home/belericks7/Documenti/optimization/VLSI/CP/out_rotation/out-" + str(i) + ".txt", "w")
+                f = open(path + "CP/out_rotation/out-" + str(i) + ".txt", "w")
             else:
-                f = open(
-                    "/home/belericks7/Documenti/optimization/VLSI/CP/out/out-" + str(i) + ".txt", "w")
+                f = open(path + "CP/out/out-" + str(i) + ".txt", "w")
             f.write(str(w) + " " + str(res.objective) + "\n")
             f.write(str(n) + "\n")
             for i in range(n):
@@ -46,15 +44,13 @@ def solve_all(max_instance, rotation, ordered):
     return time_stats
 
 
-def solve_instance(instance_id, rotation, ordered):
+def solve_instance(instance_id, rotation, ordered, path):
     # Load model from file
     if rotation:
-        model = Model(
-            "/home/belericks7/Documenti/optimization/VLSI/CP/model_rotation.mzn")
+        model = Model(path + "CP/src/model_rotation.mzn")
         print("Model-rotation")
     else:
-        model = Model(
-            "/home/belericks7/Documenti/optimization/VLSI/CP/base_model.mzn")
+        model = Model(path + "/CP/src/base_model.mzn")
         print("Model-base")
 
     # Find the MiniZinc solver configuration for Gecode or Chuffed
@@ -64,10 +60,10 @@ def solve_instance(instance_id, rotation, ordered):
     # Assign data
     if ordered:
         model.add_file(
-            "/home/belericks7/Documenti/optimization/VLSI/Instances/sorted_instances_dzn/ins-" + str(instance_id) + ".dzn")
+            path + "VLSI/Instances/sorted_instances_dzn/ins-" + str(instance_id) + ".dzn")
     else:
         model.add_file(
-            "/home/belericks7/Documenti/optimization/VLSI/Instances/instances_dzn/ins-" + str(instance_id) + ".dzn")
+            path + "VLSI/Instances/instances_dzn/ins-" + str(instance_id) + ".dzn")
 
     # Create an Instance of model for the solver
     instance = Instance(solver, model)
@@ -78,4 +74,6 @@ def solve_instance(instance_id, rotation, ordered):
 
 if __name__ == "__main__":
     n_instances = 40
-    time_stats = solve_all(n_instances, rotation=False, ordered=True)
+    PATH = '/home/belericks7/Documenti/optimization/VLSI_optimization/'
+    time_stats = solve_all(n_instances, rotation=False,
+                           ordered=True, path=PATH)

@@ -6,13 +6,13 @@ from matplotlib.ticker import ScalarFormatter
 from model import solve_instance
 
 
-def solve_all(min_instance, max_instance, rotation, ordered):
+def solve_all(min_instance, max_instance, rotation, ordered, path):
     n_solved = 0
     time_statistics = []
     for i in range(min_instance, max_instance+1):
         print("Solving: ", i)
         instance_dict = {}
-        d, instance_dict["w"], instance_dict["n"] = read_instance(i)
+        d, instance_dict["w"], instance_dict["n"] = read_instance(i, path)
         if ordered:
             d.sort(key=lambda x: x[0]*x[1], reverse=True)
         instance_dict["heights"] = [i[1] for i in d]
@@ -20,11 +20,9 @@ def solve_all(min_instance, max_instance, rotation, ordered):
         x, y, obj, solve_time = solve_instance(instance_dict, rotation)
         if obj != None:
             if rotation:
-                f = open(
-                    "/home/belericks7/Documenti/optimization/VLSI/SMT/out_rotation/out-" + str(i) + ".txt", "w")
+                f = open(path + "SMT/out_rotation/out-" + str(i) + ".txt", "w")
             else:
-                f = open(
-                    "/home/belericks7/Documenti/optimization/VLSI/SMT/out/out-" + str(i) + ".txt", "w")
+                f = open(path + "SMT/out/out-" + str(i) + ".txt", "w")
             f.write(str(instance_dict["w"]) + " " + str(obj) + "\n")
             f.write(str(instance_dict["n"]) + "\n")
             for i in range(instance_dict["n"]):
@@ -43,8 +41,8 @@ def solve_all(min_instance, max_instance, rotation, ordered):
     return time_statistics
 
 
-def read_instance(instance_id):
-    filepath = "/home/belericks7/Documenti/optimization/VLSI/Instances/instances_txt/ins-" + \
+def read_instance(instance_id, path):
+    filepath = path + "Instances/instances_txt/ins-" + \
         str(instance_id) + ".txt"
     with open(filepath, "r") as f_in:
         f = f_in.readlines()
@@ -66,5 +64,6 @@ def read_instance(instance_id):
 
 if __name__ == "__main__":
     n_instances = 40
+    PATH = "/home/belericks7/Documenti/optimization/VLSI_optimization/"
     time_stats = solve_all(
-        min_instance=1, max_instance=n_instances, rotation=False, ordered=True)
+        min_instance=1, max_instance=n_instances, rotation=False, ordered=True, path=PATH)
