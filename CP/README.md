@@ -7,7 +7,8 @@ The following packages are required:
 - numpy
 
 ## Usage
-The models can be are executed by launching the `solver.py` file.
+The models can be executed by launching the `solver.py` file that is in the `src` directory.
+
 You can modify the following arguments of the main function:
 
 | Argument                                         | Description                                                                  |
